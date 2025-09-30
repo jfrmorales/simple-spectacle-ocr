@@ -290,6 +290,20 @@ tesseract --list-langs
 
 ## Desinstalación
 
+### Método 1: Script automático (Recomendado)
+
+```bash
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+Para desinstalar sin confirmación:
+```bash
+./uninstall.sh -y
+```
+
+### Método 2: Manual
+
 ```bash
 rm ~/.local/bin/ocr-spectacle.sh
 rm ~/.local/bin/ocr-clipboard
