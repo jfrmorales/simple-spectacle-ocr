@@ -72,10 +72,10 @@ echo -e "${GREEN}✓${NC} Scripts installed:"
 echo "  - $BIN_DIR/ocr-spectacle.sh (main script)"
 echo -e "  - $BIN_DIR/ocr-clipboard (clipboard wrapper)\n"
 
-# Install desktop files
+# Install desktop files (expand $HOME to actual user path)
 echo "Installing desktop integration..."
-cp "$SCRIPT_DIR/ocr-from-image-file.desktop" "$DESKTOP_DIR/ocr-from-image-file.desktop"
-cp "$SCRIPT_DIR/ocr-from-clipboard.desktop" "$DESKTOP_DIR/ocr-from-clipboard.desktop"
+sed "s|\$HOME|$HOME|g" "$SCRIPT_DIR/ocr-from-image-file.desktop" > "$DESKTOP_DIR/ocr-from-image-file.desktop"
+sed "s|\$HOME|$HOME|g" "$SCRIPT_DIR/ocr-from-clipboard.desktop" > "$DESKTOP_DIR/ocr-from-clipboard.desktop"
 echo -e "${GREEN}✓${NC} Desktop files installed:"
 echo "  - ocr-from-image-file.desktop (Right-click on image files)"
 echo -e "  - ocr-from-clipboard.desktop (For keyboard shortcut)\n"
