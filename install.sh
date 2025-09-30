@@ -99,37 +99,84 @@ echo ""
 if [[ ! -f "$CONFIG_DIR/config" ]]; then
     echo "Configuring OCR language..."
     echo ""
-    echo -e "${GREEN}Your installed languages:${NC} $INSTALLED_LANGS"
-    echo ""
-    echo "Common language codes:"
-    echo "  • eng - English"
-    echo "  • spa - Spanish"
-    echo "  • fra - French"
-    echo "  • deu - German"
-    echo "  • por - Portuguese"
-    echo "  • ita - Italian"
-    echo ""
-    echo "Examples of how to answer:"
-    echo "  • eng         → English only"
-    echo "  • spa         → Spanish only"
-    echo "  • eng+spa     → English + Spanish (use + without spaces)"
-    echo "  • spa+eng     → Spanish priority, then English"
-    echo ""
-    echo "Note: Order matters! The first language has priority."
-    echo ""
-    echo "To install more languages:"
-    echo "  sudo pacman -S tesseract-data-<lang>"
-    echo ""
 
-    read -p "Enter language code(s) [eng]: " USER_LANG
-    USER_LANG="${USER_LANG:-eng}"
+    # Map language codes to full names
+    declare -A LANG_NAMES=(
+        ["eng"]="English"
+        ["spa"]="Spanish"
+        ["fra"]="French"
+        ["deu"]="German"
+        ["por"]="Portuguese"
+        ["ita"]="Italian"
+        ["rus"]="Russian"
+        ["chi_sim"]="Chinese (Simplified)"
+        ["jpn"]="Japanese"
+        ["ara"]="Arabic"
+        ["kor"]="Korean"
+        ["nld"]="Dutch"
+        ["pol"]="Polish"
+        ["tur"]="Turkish"
+    )
 
+    # Try to use whiptail for interactive selection
+    if command -v whiptail &>/dev/null; then
+        # Build checklist options from installed languages
+        CHECKLIST_OPTIONS=()
+        for lang in $INSTALLED_LANGS; do
+            # Skip 'osd' (orientation and script detection)
+            if [[ "$lang" != "osd" ]]; then
+                LANG_NAME="${LANG_NAMES[$lang]:-$lang}"
+                # Pre-select 'eng' if available
+                if [[ "$lang" == "eng" ]]; then
+                    CHECKLIST_OPTIONS+=("$lang" "$LANG_NAME" "ON")
+                else
+                    CHECKLIST_OPTIONS+=("$lang" "$LANG_NAME" "OFF")
+                fi
+            fi
+        done
+
+        # Show whiptail checklist
+        SELECTED=$(whiptail --title "OCR Language Configuration" \
+            --checklist "Select OCR languages (Space to toggle, Enter to confirm):\n\nNote: Order matters! First selected = highest priority." \
+            20 70 10 "${CHECKLIST_OPTIONS[@]}" 3>&1 1>&2 2>&3)
+
+        # Check if user cancelled
+        if [[ $? -eq 0 ]]; then
+            # Remove quotes and convert spaces to +
+            USER_LANG=$(echo "$SELECTED" | tr -d '"' | tr ' ' '+')
+            # If empty, use default
+            USER_LANG="${USER_LANG:-eng}"
+        else
+            echo -e "${YELLOW}Selection cancelled, using default: eng${NC}"
+            USER_LANG="eng"
+        fi
+    else
+        # Fallback to text input if whiptail not available
+        echo -e "${YELLOW}Note: whiptail not found, using text input${NC}"
+        echo ""
+        echo -e "${GREEN}Your installed languages:${NC} $INSTALLED_LANGS"
+        echo ""
+        echo "Common language codes:"
+        echo "  • eng - English"
+        echo "  • spa - Spanish"
+        echo "  • fra - French"
+        echo "  • deu - German"
+        echo ""
+        echo "Examples:"
+        echo "  • eng         → English only"
+        echo "  • eng+spa     → English + Spanish (use + without spaces)"
+        echo ""
+        read -p "Enter language code(s) [eng]: " USER_LANG
+        USER_LANG="${USER_LANG:-eng}"
+    fi
+
+    echo ""
     echo "# Spectacle OCR Configuration" > "$CONFIG_DIR/config"
     echo "# Language codes for Tesseract OCR" >> "$CONFIG_DIR/config"
     echo "# Examples: eng, spa, eng+spa, eng+fra+deu" >> "$CONFIG_DIR/config"
     echo "OCR_LANG=\"$USER_LANG\"" >> "$CONFIG_DIR/config"
 
-    echo -e "${GREEN}✓${NC} Configuration saved to $CONFIG_DIR/config\n"
+    echo -e "${GREEN}✓${NC} Configuration saved: OCR_LANG=\"$USER_LANG\"\n"
 else
     echo -e "${YELLOW}ℹ${NC}  Configuration file already exists at $CONFIG_DIR/config\n"
 fi
