@@ -1,12 +1,14 @@
 # Simple Spectacle OCR
 
+[🇬🇧 English](README.md) | [🇪🇸 Español](README.es.md)
+
 Simple bash scripts that add OCR (Optical Character Recognition) capabilities to your Linux workflow. Extract text from screenshots and clipboard images with a single command or keyboard shortcut.
 
 **⚠️ Note:** This is a lightweight bash script solution. For a full-featured Qt application with GUI and advanced features, check out [spectacle-ocr-screenshot](https://github.com/funinkina/spectacle-ocr-screenshot/).
 
-Basado en el artículo: https://kozlev.com/ocr-for-spectacle/
+Based on the article: https://kozlev.com/ocr-for-spectacle/
 
-## Características
+## Features
 
 - 🚀 Extract text from clipboard with keyboard shortcut
 - 📁 Right-click OCR on image files (works with any file manager)
@@ -16,149 +18,150 @@ Basado en el artículo: https://kozlev.com/ocr-for-spectacle/
 - 🔔 Desktop notifications
 - 🧹 Automatic cleanup of temporary files
 
-## Requisitos
+## Requirements
 
-### Arch Linux - Instalación Completa
+### Arch Linux - Complete Installation
 
-**IMPORTANTE**: Instala los paquetes de idioma PRIMERO para evitar preguntas interactivas de pacman.
+**IMPORTANT**: Install language packs FIRST to avoid interactive prompts from pacman.
 
 ```bash
-# Paso 1: Instalar paquetes de idioma de Tesseract
-# Elige los idiomas que necesites:
+# Step 1: Install Tesseract language packs
+# Choose the languages you need:
 
-# Solo inglés
+# English only
 sudo pacman -S tesseract-data-eng
 
-# Inglés + Español (recomendado)
+# English + Spanish (recommended)
 sudo pacman -S tesseract-data-eng tesseract-data-spa
 
-# Múltiples idiomas
+# Multiple languages
 sudo pacman -S tesseract-data-eng tesseract-data-spa tesseract-data-fra tesseract-data-deu
 
-# Paso 2: Instalar tesseract y el resto de dependencias
+# Step 2: Install tesseract and other dependencies
 sudo pacman -S tesseract imagemagick wl-clipboard libnotify
 ```
 
-**¿Por qué en este orden?** Tesseract requiere al menos un paquete de idioma (dependencia `tessdata`). Si instalas los idiomas primero, pacman no preguntará qué idioma usar.
+**Why this order?** Tesseract requires at least one language pack (dependency `tessdata`). If you install language packs first, pacman won't ask which provider to use.
 
-### Ubuntu/Debian - Instalación Completa
+### Ubuntu/Debian - Complete Installation
 
 ```bash
-# Un solo comando - instala tesseract con idiomas y dependencias
-# Solo inglés
+# One command - install tesseract with languages and dependencies
+# English only
 sudo apt install tesseract-ocr tesseract-ocr-eng imagemagick wl-clipboard libnotify-bin
 
-# Inglés + Español (recomendado)
+# English + Spanish (recommended)
 sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-spa imagemagick wl-clipboard libnotify-bin
 
-# Múltiples idiomas
+# Multiple languages
 sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-spa tesseract-ocr-fra imagemagick wl-clipboard libnotify-bin
 ```
 
-### Idiomas Adicionales
+### Additional Languages
 
-**Arch Linux - Paquetes disponibles:**
-- `tesseract-data-eng` - Inglés
-- `tesseract-data-spa` - Español
-- `tesseract-data-fra` - Francés
-- `tesseract-data-deu` - Alemán
-- `tesseract-data-por` - Portugués
-- `tesseract-data-ita` - Italiano
-- `tesseract-data-rus` - Ruso
-- `tesseract-data-chi_sim` - Chino simplificado
-- `tesseract-data-jpn` - Japonés
-- `tesseract-data-ara` - Árabe
+**Arch Linux - Available packages:**
+- `tesseract-data-eng` - English
+- `tesseract-data-spa` - Spanish
+- `tesseract-data-fra` - French
+- `tesseract-data-deu` - German
+- `tesseract-data-por` - Portuguese
+- `tesseract-data-ita` - Italian
+- `tesseract-data-rus` - Russian
+- `tesseract-data-chi_sim` - Simplified Chinese
+- `tesseract-data-jpn` - Japanese
+- `tesseract-data-ara` - Arabic
 
-Para instalar idiomas adicionales después:
+To install additional languages later:
 ```bash
-sudo pacman -S tesseract-data-<idioma>
+sudo pacman -S tesseract-data-<lang>
 ```
 
-**Ver todos los idiomas disponibles:**
+**See all available languages:**
 ```bash
 pacman -Ss tesseract-data  # Arch Linux
 apt search tesseract-ocr   # Ubuntu/Debian
 ```
 
-## Instalación
+## Installation
 
-1. Clonar el repositorio:
+1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd spectacle-ocr
+git clone https://github.com/jfrmorales/simple-spectacle-ocr.git
+cd simple-spectacle-ocr
 ```
 
-2. Ejecutar el script de instalación:
+2. Run the installation script:
 ```bash
 chmod +x install.sh
 ./install.sh
 ```
 
-El instalador:
-- ✅ Verificará todas las dependencias
-- ✅ Instalará `ocr-spectacle.sh` en `~/.local/bin/`
-- ✅ Instalará `ocr-clipboard` en `~/.local/bin/`
-- ✅ Instalará `ocr-from-image-file.desktop` (menú contextual para archivos de imagen)
-- ✅ Instalará `ocr-from-clipboard.desktop` (para atajos de teclado)
-- ✅ Creará archivo de configuración en `~/.config/spectacle-ocr/config`
-- ✅ Te pedirá elegir el idioma OCR
-- ✅ Actualizará la base de datos MIME
-- ✅ Mostrará instrucciones detalladas de uso
+The installer will:
+- ✅ Verify all dependencies
+- ✅ Install `ocr-spectacle.sh` to `~/.local/bin/`
+- ✅ Install `ocr-clipboard` to `~/.local/bin/`
+- ✅ Install `ocr-from-image-file.desktop` (context menu for image files)
+- ✅ Install `ocr-from-clipboard.desktop` (for keyboard shortcuts)
+- ✅ Create configuration file at `~/.config/spectacle-ocr/config`
+- ✅ Ask you to choose OCR language
+- ✅ Update MIME database
+- ✅ Display detailed usage instructions
 
-## Uso
+## Usage
 
-### Método 1: Desde Portapapeles (Recomendado) 🚀
+### Method 1: From Clipboard (Recommended) 🚀
 
-**El método más rápido y conveniente:**
+**The fastest method for daily use:**
 
-1. Tomar una captura de pantalla (Spectacle, Flameshot, o cualquier herramienta)
-2. La imagen queda automáticamente en el portapapeles
-3. Ejecutar: `ocr-clipboard`
-4. El texto extraído será copiado al portapapeles
+1. Take a screenshot (Spectacle, Flameshot, or any tool)
+2. The image is automatically in the clipboard
+3. Run: `ocr-clipboard`
+4. Extracted text will be copied to clipboard
 
-**Configurar atajo de teclado (KDE Plasma):**
-1. Abrir Configuración del Sistema → Atajos
-2. Crear nuevo atajo personalizado
-3. Comando: `ocr-clipboard`
-4. Asignar tecla (ej: `Meta+Shift+T`)
+**Configure keyboard shortcut (KDE Plasma):**
+1. Open: System Settings → Shortcuts → Custom Shortcuts
+2. Click: Edit → New → Global Shortcut → Command/URL
+3. Name: OCR from Clipboard
+4. Command: `ocr-clipboard`
+5. Trigger: Assign your preferred key (e.g., `Meta+Shift+T`)
 
-Ahora puedes hacer: **Captura → Hotkey → Texto en portapapeles** ⚡
+Now you can: **Screenshot → Hotkey → Text in clipboard** ⚡
 
-### Método 2: Desde Archivo de Imagen (Menú Contextual)
-1. Abrir cualquier gestor de archivos (Dolphin, Nautilus, etc.)
-2. Navegar a un archivo de imagen (PNG, JPG, JPEG)
-3. Hacer clic derecho → **"Extract Text (OCR)"**
-4. El texto será copiado automáticamente al portapapeles
+### Method 2: From Image File (Context Menu)
+1. Open any file manager (Dolphin, Nautilus, etc.)
+2. Navigate to an image file (PNG, JPG, JPEG)
+3. Right-click → **"Extract Text (OCR)"**
+4. Text will be automatically copied to clipboard
 
-**Funciona con:** Capturas de pantalla guardadas, imágenes descargadas, fotos, etc.
+**Works with:** Saved screenshots, downloaded images, photos, etc.
 
-### Método 3: Línea de comandos con archivo
+### Method 3: Command line with file
 ```bash
 ~/.local/bin/ocr-spectacle.sh /path/to/image.png
 ```
 
-### Método 4: Directamente desde portapapeles sin wrapper
+### Method 4: Directly from clipboard without wrapper
 ```bash
 ~/.local/bin/ocr-spectacle.sh
 ```
 
-## Configuración
+## Configuration
 
-### Sistema de Configuración
+### Configuration System
 
-El script lee la configuración en el siguiente orden de prioridad:
-1. **Archivo de configuración:** `~/.config/spectacle-ocr/config`
-2. **Variable de entorno:** `OCR_LANG`
-3. **Default:** `eng` (Inglés)
+The script reads configuration in the following priority order:
+1. **Configuration file:** `~/.config/spectacle-ocr/config`
+2. **Environment variable:** `OCR_LANG`
+3. **Default:** `eng` (English)
 
-### Método 1: Archivo de configuración (Recomendado)
+### Method 1: Configuration file (Recommended)
 
-Edita el archivo de configuración:
+Edit the configuration file:
 ```bash
 nano ~/.config/spectacle-ocr/config
 ```
 
-Cambia el idioma:
+Change the language:
 ```bash
 # Spectacle OCR Configuration
 # Language codes for Tesseract OCR
@@ -166,143 +169,143 @@ Cambia el idioma:
 OCR_LANG="eng+spa"
 ```
 
-### Método 2: Variable de entorno
+### Method 2: Environment variable
 
-Temporal (solo para la sesión actual):
+Temporary (current session only):
 ```bash
 export OCR_LANG="eng+spa"
 ```
 
-Permanente (agregar a `~/.bashrc` o `~/.zshrc`):
+Permanent (add to `~/.bashrc` or `~/.zshrc`):
 ```bash
 echo 'export OCR_LANG="eng+spa"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Códigos de idioma comunes:
-- `eng` - Inglés
-- `spa` - Español
-- `fra` - Francés
-- `deu` - Alemán
-- `por` - Portugués
-- `ita` - Italiano
-- `rus` - Ruso
-- `chi_sim` - Chino simplificado
-- `jpn` - Japonés
-- `ara` - Árabe
+### Common language codes:
+- `eng` - English
+- `spa` - Spanish
+- `fra` - French
+- `deu` - German
+- `por` - Portuguese
+- `ita` - Italian
+- `rus` - Russian
+- `chi_sim` - Simplified Chinese
+- `jpn` - Japanese
+- `ara` - Arabic
 
-### Múltiples idiomas:
+### Multiple languages:
 ```bash
-OCR_LANG="eng+spa"           # Inglés + Español
-OCR_LANG="eng+fra+deu"       # Inglés + Francés + Alemán
-OCR_LANG="spa+por"           # Español + Portugués
+OCR_LANG="eng+spa"           # English + Spanish
+OCR_LANG="eng+fra+deu"       # English + French + German
+OCR_LANG="spa+por"           # Spanish + Portuguese
 ```
 
-### Verificar idiomas instalados:
+### Check installed languages:
 ```bash
 tesseract --list-langs
 ```
 
-## Cómo funciona
+## How It Works
 
-### Modo Portapapeles (ocr-clipboard):
-1. **Lee imagen**: Extrae imagen del portapapeles usando wl-paste (Wayland) o xclip (X11)
-2. **Redimensionado**: ImageMagick aumenta el tamaño al 400% para mejor precisión
-3. **OCR**: Tesseract procesa la imagen y extrae el texto
-4. **Resultado**: Copia el texto al portapapeles
-5. **Notificación**: Muestra notificación de éxito
-6. **Limpieza**: Elimina archivos temporales automáticamente
+### Clipboard Mode (ocr-clipboard):
+1. **Read image**: Extracts image from clipboard using wl-paste (Wayland) or xclip (X11)
+2. **Resize**: ImageMagick increases size to 400% for better accuracy
+3. **OCR**: Tesseract processes the image and extracts text
+4. **Result**: Copies text to clipboard
+5. **Notification**: Shows success notification
+6. **Cleanup**: Automatically removes temporary files
 
-### Modo Archivo (Spectacle integration):
-1. **Captura**: Spectacle guarda la imagen temporalmente
-2. **Redimensionado**: ImageMagick aumenta el tamaño al 400% para mejor precisión
-3. **OCR**: Tesseract procesa la imagen y extrae el texto
-4. **Portapapeles**: Copia el texto al portapapeles
-5. **Notificación**: Muestra notificación de éxito
-6. **Limpieza**: Elimina archivos temporales automáticamente
+### File Mode (Spectacle integration):
+1. **Screenshot**: Spectacle saves the image temporarily
+2. **Resize**: ImageMagick increases size to 400% for better accuracy
+3. **OCR**: Tesseract processes the image and extracts text
+4. **Clipboard**: Copies text to clipboard
+5. **Notification**: Shows success notification
+6. **Cleanup**: Automatically removes temporary files
 
-## Solución de problemas
+## Troubleshooting
 
-### El texto no se copia al portapapeles
-**Problema:** El script se ejecuta pero el texto no aparece en el portapapeles
+### Text is not copied to clipboard
+**Problem:** Script runs but text doesn't appear in clipboard
 
-**Soluciones:**
-- Verificar que `wl-clipboard` (Wayland) o `xclip` (X11) estén instalados
-- Probar manualmente:
+**Solutions:**
+- Verify `wl-clipboard` (Wayland) or `xclip` (X11) are installed
+- Test manually:
   ```bash
   echo "test" | wl-copy && wl-paste    # Wayland
   echo "test" | xclip -selection clipboard && xclip -selection clipboard -o  # X11
   ```
 
-### OCR no funciona correctamente / Texto incorrecto
-**Problema:** El OCR no reconoce bien el texto
+### OCR not working correctly / Incorrect text
+**Problem:** OCR doesn't recognize text properly
 
-**Soluciones:**
-- Verificar que el paquete de idioma esté instalado: `tesseract --list-langs`
-- Instalar el paquete de idioma correcto: `sudo pacman -S tesseract-data-spa`
-- Verificar configuración: `cat ~/.config/spectacle-ocr/config`
-- Probar con imágenes de mayor calidad/resolución
-- Ajustar el porcentaje de redimensionado en `~/.local/bin/ocr-spectacle.sh` (línea 41)
+**Solutions:**
+- Verify language pack is installed: `tesseract --list-langs`
+- Install correct language pack: `sudo pacman -S tesseract-data-spa`
+- Check configuration: `cat ~/.config/spectacle-ocr/config`
+- Try with higher quality/resolution images
+- Adjust resize percentage in `~/.local/bin/ocr-spectacle.sh` (line 41)
 
-### No aparece la opción en Spectacle
-**Problema:** No veo "Extract Text (OCR)" al hacer click derecho
+### Option doesn't appear in context menu
+**Problem:** Don't see "Extract Text (OCR)" when right-clicking
 
-**Soluciones:**
-- Actualizar base de datos MIME:
+**Solutions:**
+- Update MIME database:
   ```bash
   update-desktop-database ~/.local/share/applications/
   ```
-- Reiniciar Spectacle completamente
-- Verificar que el archivo `.desktop` esté correctamente instalado:
+- Completely restart file manager
+- Verify desktop file is correctly installed:
   ```bash
-  ls -la ~/.local/share/applications/spectacle-ocr.desktop
+  ls -la ~/.local/share/applications/ocr-from-image-file.desktop
   ```
-- Verificar permisos del script:
+- Verify script permissions:
   ```bash
   ls -la ~/.local/bin/ocr-spectacle.sh
-  chmod +x ~/.local/bin/ocr-spectacle.sh  # Si es necesario
+  chmod +x ~/.local/bin/ocr-spectacle.sh  # If needed
   ```
 
 ### Error "No image file received"
-**Problema:** Aparece notificación de error al ejecutar
+**Problem:** Error notification appears when executing
 
-**Soluciones:**
-- Verificar que Spectacle esté pasando correctamente el archivo
-- Probar manualmente con una imagen:
+**Solutions:**
+- Verify that the screenshot tool is passing the file correctly
+- Test manually with an image:
   ```bash
   ~/.local/bin/ocr-spectacle.sh /path/to/image.png
   ```
-- Verificar logs del sistema: `journalctl -f` (mientras ejecutas el script)
+- Check system logs: `journalctl -f` (while running the script)
 
-### Cambio de idioma no tiene efecto
-**Problema:** Cambié la configuración pero sigue usando inglés
+### Language change has no effect
+**Problem:** Changed configuration but still using English
 
-**Soluciones:**
-- Verificar el contenido del archivo de configuración:
+**Solutions:**
+- Verify configuration file content:
   ```bash
   cat ~/.config/spectacle-ocr/config
   ```
-- Asegurarse de que el idioma esté instalado: `tesseract --list-langs`
-- Probar directamente con variable de entorno:
+- Ensure language is installed: `tesseract --list-langs`
+- Test directly with environment variable:
   ```bash
   OCR_LANG="spa" ~/.local/bin/ocr-spectacle.sh /path/to/image.png
   ```
 
-## Desinstalación
+## Uninstallation
 
-### Método 1: Script automático (Recomendado)
+### Method 1: Automatic script (Recommended)
 
 ```bash
 chmod +x uninstall.sh
 ./uninstall.sh
 ```
 
-Para desinstalar sin confirmación:
+To uninstall without confirmation:
 ```bash
 ./uninstall.sh -y
 ```
 
-### Método 2: Manual
+### Method 2: Manual
 
 ```bash
 rm ~/.local/bin/ocr-spectacle.sh
@@ -313,11 +316,11 @@ rm -rf ~/.config/spectacle-ocr
 update-desktop-database ~/.local/share/applications/
 ```
 
-## Créditos
+## Credits
 
-- Idea original y artículo: [Kaloian Kozlev](https://kozlev.com/ocr-for-spectacle/)
-- Implementación: Basada en el artículo anterior
+- Original idea and article: [Kaloian Kozlev](https://kozlev.com/ocr-for-spectacle/)
+- Implementation: Based on the above article
 
-## Licencia
+## License
 
 MIT License
