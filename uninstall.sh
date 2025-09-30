@@ -16,12 +16,17 @@ BIN_DIR="$HOME/.local/bin"
 DESKTOP_DIR="$HOME/.local/share/applications"
 CONFIG_DIR="$HOME/.config/spectacle-ocr"
 
-# Files to remove
+# Files to remove (including old versions)
 FILES_TO_REMOVE=(
     "$BIN_DIR/ocr-spectacle.sh"
     "$BIN_DIR/ocr-clipboard"
     "$DESKTOP_DIR/ocr-from-image-file.desktop"
     "$DESKTOP_DIR/ocr-from-clipboard.desktop"
+    # Old versions (backwards compatibility)
+    "$DESKTOP_DIR/spectacle-ocr.desktop"
+    "$DESKTOP_DIR/ocr-clipboard.desktop"
+    "$DESKTOP_DIR/spectacle-ocr-integration.desktop"
+    "$DESKTOP_DIR/net.local.ocr-clipboard.desktop"
 )
 
 echo -e "${YELLOW}=== Spectacle OCR Uninstaller ===${NC}\n"
