@@ -101,9 +101,5 @@ else
     exit 1
 fi
 
-# Notify success with text preview
-TEXT_PREVIEW=$(echo "$TEXT" | head -c 200)
-if [[ ${#TEXT} -gt 200 ]]; then
-    TEXT_PREVIEW="${TEXT_PREVIEW}..."
-fi
-notify-send -i edit-paste "OCR - Text Copied" "$TEXT_PREVIEW"
+# Notify success
+notify-send -i edit-paste "Text copied to clipboard"
