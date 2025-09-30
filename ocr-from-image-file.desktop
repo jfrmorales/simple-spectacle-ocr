@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Extract Text (OCR)
 Comment=Extract text from image file using OCR
-Exec=$HOME/.local/bin/ocr-spectacle.sh %f
+Exec=sh -c "nohup $HOME/.local/bin/ocr-spectacle.sh %f >/dev/null 2>&1 &"
 MimeType=image/png;image/jpeg;image/jpg;
 Icon=scanner
 Terminal=false
@@ -9,3 +9,4 @@ Type=Application
 Categories=Utility;
 # This desktop file adds "Extract Text (OCR)" option when right-clicking image files
 # Works in any file manager (Dolphin, Nautilus, Thunar, etc.)
+# Runs in background to avoid blocking the file manager UI
