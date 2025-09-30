@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=OCR from Clipboard
+Comment=Extract text from clipboard image using OCR (use with keyboard shortcut)
+Exec=$HOME/.local/bin/ocr-clipboard
+Icon=edit-find
+Terminal=false
+Type=Application
+Categories=Utility;
+NoDisplay=true
+X-KDE-Shortcuts=
+# This desktop file is meant to be used with keyboard shortcuts
+# Configure in: System Settings → Shortcuts → Add Custom Shortcut
